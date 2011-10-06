@@ -1,0 +1,185 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{OSI Model}
+
+\begin{tabular}{ | c | c | }
+\hline
+7 & application \\ \hline
+6 & presentation \\ \hline
+5 & session \\ \hline
+4 & transport \\ \hline
+3 & network \\ \hline
+2 & data link \\ \hline
+1 & physical \\ \hline
+\end{tabular}
+
+\begin{description}
+
+\item[application]
+end user, authentication, ensure remote communication partner is available,
+data integrity, privacy and error recovery, firewalls, email, telnet, HTTP,
+FTP, SNMP
+
+\item[presentation]
+how should data be presented, formatting, encryption, compatibility with OS,
+encapsulation for transmission, data formatting, data encryption, compression,
+translation
+
+\item[session]
+manager of communication between hosts, creation, maintenance and teardown
+
+\item[transport]
+establish logical end-to-end connection between two systems, segment data,
+correct order, free of errors, TCP (connection), UDP (connectionless)
+
+\item[network]
+IP, routing layer, what valid paths to destination?, what is the best path?
+
+\item[data link]
+switches, WAPs, ethernet, HDLC (high data link control), PPP (point-to-point
+protocol), frame relay, error detection (frame check sequence) but not error
+recovery, MAC addresses, bridges
+
+\item[physical]
+pins, connectors, current
+
+\end{description}
+
+Layer 3 switches exist.\\
+
+Data flows down the model, then back up.
+
+\subsection{Data units}
+
+\begin{tabular}{ | c | c | }
+\hline
+Layer & Unit \\ \hline \hline
+7 - 5 & data \\ \hline
+4 & segment \\ \hline
+3 & packet \\ \hline
+2 & frame \\ \hline
+1 & bit \\ \hline
+\end{tabular}
+
+Each layer adds a layer-specific header that is removed by the same layer at
+the other end (same-layer interaction). Layer 2 adds a trailer and a header.
+
+\begin{description}
+
+\item[PDU]
+protocol data unit, combination of header and data
+
+\item[adjacent-layer interaction]
+interaction between adjacent layers on the same host
+
+\end{description}
+
+\section{TCP/IP Model}
+
+\begin{tabular}{ | c | c | }
+\hline
+TCP/IP Model Layer & OSI equivalent \\ \hline \hline
+application & application, presentation, session \\ \hline
+transport & transport \\ \hline
+internet & network \\ \hline
+network access & data link, physical\\ \hline
+\end{tabular}
+
+\section{TCP}
+
+\begin{itemize}
+
+\item guaranteed delivery
+\item error detection via sequence and ack numbers
+\item windowing
+\item connection-oriented
+
+\end{itemize}
+
+\subsection{3-way Handshake}
+
+Done before data can be transmitted. Negotiate TCP sequence number.
+
+\begin{enumerate}
+
+\item Sender sends segment with SYN bit set
+\item Receiver sends segment with SYN and ACK bits set (SYN/ACK)
+\item Sender sends segment with ACK bit set
+
+\end{enumerate}
+
+TCP sends FIN to tear down.
+
+\subsection{SYN / ACK Flow}
+
+TCP performs both error detection and recovery.\\
+
+The sequence number gives order segements should be reassembled.\\
+
+Recipient sends ACK number of next sequence number it expects to see (not the
+last sequence number received). This is how it detects lost segments.\\
+
+Sender sets acknowledgement timer. If an ACK is not received by the time
+it expires, sender will retransmit all segments in question (PAR,
+positive acknowledgement with retransmission).
+
+\subsection{Windowing}
+
+Window size is how much data the sender can transmit without an ACK.\\
+
+Recipient decides window size (flow control).\\
+
+Recipient increases window size until error rate goes up, then reduces (sliding
+window).
+
+\section{UDP}
+
+\begin{itemize}
+
+\item best effort delivery, no guarantee
+\item no error detection
+\item no windowing
+\item connectionless
+
+\end{itemize}
+
+Less overhead than TCP.
+
+\section{Ports}
+
+Used for both TCP and UDP.\\
+
+For sending multiple flows of information to the same host (multiplexing).
+
+\begin{description}
+
+\item[socket]
+combination of IP address and port
+
+\end{description}
+
+Well known ports are reserved ports less than 1024.\\
+
+\begin{tabular}{ | c | c | }
+\hline
+FTP & TCP 20, 21 \\ \hline
+SSH & TCP 22 \\ \hline
+Telnet & TCP 23 \\ \hline
+SMTP & TCP 25 \\ \hline
+HTTP & TCP 80 \\ \hline
+POP3 & TCP 110 \\ \hline
+SSL & TCP 443 \\ \hline
+\hline
+DHCP & UDP 67, 68 \\ \hline
+TFTP & UDP 69 \\ \hline
+SNMP & UDP 161 \\ \hline
+\hline
+DNS & TCP and UDP 53 \\ \hline
+private email & TCP and UDP 24 \\ \hline
+\hline
+VOIP & UDP 16384 - 32767 \\ \hline
+\end{tabular}
+
+\end{document}
