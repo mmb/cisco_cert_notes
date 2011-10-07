@@ -1,0 +1,210 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{Hubs and Repeaters}
+
+\begin{description}
+
+\item[repeater]
+generates a new, clean copy of existing signal
+
+\item[attenuation]
+weakening of a signal as it travels
+
+\item[hub]
+a repeater with multiple ports
+
+\end{description}
+
+Hubs and repeaters are layer 1 devices. They do not perform switching or look
+at MAC addresses.\\
+
+PCs connected to a hub share bandwidth and only one can transmit at a time.
+Collision detection is done using CSMA/CD.\\
+
+A hub is one big broadcast domain.
+
+\section{Bridges}
+
+Bridges are places between multiple hubs. They create smaller collision
+domains, but still have only one broadcast domain.
+
+\section{Switches}
+
+Each host connected to a switch has its own collision domain.\\
+
+By default, Cisco switches have all ports in the same broadcast domain.
+
+\begin{description}
+
+\item[microsegmentation]
+each host is in its own collision domain
+
+\end{description}
+
+\subsection{Packet Actions}
+
+When a packet comes into a switch, the switch will check its MAC table.\\
+
+If the source address in the frame is not in the table it will be added
+with the port it came in on.\\
+
+The switch will then:\\
+
+\begin{description}
+
+\item[forward]
+when the switch has an entry for the destination MAC address in its MAC table,
+it will be sent out the corresponding port
+
+\item[flood]
+when there is no entry for the destination MAC address in its MAC table,
+it will be sent out every port except the one it came in on
+
+\item[filter]
+when both the source and destination MAC addresses are found in its MAC table
+and are associated with the same port the frame will be dropped
+
+\end{description}
+
+\begin{description}
+
+\item[unknown unicast frame]
+a frame coming into a switch when the switch does not have the destination
+address in its MAC table, always flooded
+
+\end{description}
+
+Switches never send a frame back out the same port it came in on.\\
+
+The MAC address for broadcast frames is \texttt{ff:ff:ff:ff:ff:ff}.\\
+
+The MAC table is also known as the CAM (content addressable memory) table,
+bridging table or switching table.\\
+
+The default age-out time for dynamic MAC table entries is 300 seconds.\\
+
+VLAN 1 is the default VLAN on Cisco switches.
+
+\subsection{Forwarding Methods}
+
+When a switch decides to forward a frame, it will either:
+
+\begin{description}
+
+\item[store-and-forward]
+the entire frame is stored by the switch, checked for errors (error detection,
+not correction), and then forwarded, best error detection of all the methods
+
+\item[cut through]
+frame is forwarded immediately without checking FCS, can be forwarded before
+the entire frame is received, fastest of all the methods
+
+\item[fragment-free]
+checks first 64 bytes of of frame for errors, compromise
+
+
+\end{description}
+
+FCS lets recipient determine if frame is corrupted. It provides error
+detection but not correction.
+
+\section{VLANs}
+
+\begin{description}
+
+\item[broadcast storm]
+continual generation of new broadcasts, can kill switch by overwhelming
+CPU and memory
+
+\end{description}
+
+VLANs are a way to separate groups of ports and can be used to limit broadcast
+propagation.\\
+
+No traffic can be sent from one VLAN to another without the intervention of
+a layer 3 device (such as a router).
+
+\section{Switch Types}
+
+The Cisco 3-layer switching model.
+
+\begin{description}
+
+\item[access]
+switches that end users are connected to
+
+\item[distribution]
+intermediate
+
+\item[core]
+connect different buildings on a campus network
+
+\end{description}
+
+\section{Spanning Tree Protocol}
+
+STP is used to prevent swtiching loops. It is enabled by default on Cisco
+routers.\\
+
+STP determines the best path, and if that goes down, will determine a new best
+path. Ports that are not on the best path will be put in blocking mode.\\
+
+The physically shortest path might not be the best one.
+
+\section{Switch Security}
+
+\begin{itemize}
+
+\item lock up rooms and cabinets
+\item close unused ports with shutdown
+\item prevent trunking with switch mode access
+\item place unused ports in an unused VLAN
+
+\end{itemize}
+
+\subsection{Port Security}
+
+Can be used to limit use of ports by MAC address.\\
+
+Options:
+
+\begin{description}
+
+\item[aging]
+how long allowed MACs will remain allowed
+
+\item[maximum]
+how many secure MACs are allowed (default 1)
+
+\item[violation]
+what happens when a non-secure MAC is seen
+
+\begin{description}
+
+\item[shutdown]
+default, shut down port, log message, and drop frame, port must be manually
+reopened
+
+\item[restrict]
+logs and drops frames, but does not shutdown port
+
+\item[protect]
+drops frames only
+
+\end{description}
+
+\end{description}
+
+\begin{description}
+
+\item[sticky port security]
+the first MAC seen on the port is allowed
+
+\end{description}
+
+When a port is in err-disabled state the port LED turns off and the port
+must be manually re-enabled.
+
+\end{document}
