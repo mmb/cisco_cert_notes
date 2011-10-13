@@ -1,0 +1,278 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{Initial Configuration Problems}
+
+\begin{enumerate}
+
+\item some desired features will not be enabled
+\item some undesired features will be enabled
+
+\end{enumerate}
+
+\section{Ways to Connect to Cisco Routers and Switches}
+
+\begin{enumerate}
+
+\item physically, using laptop and rollover cable (RJ-45 to DB-9)
+\item telnet or ssh
+
+\end{enumerate}
+
+\section{Protecting the Console Port with a Password}
+
+\begin{verbatim}
+conf t
+line con 0
+password SECRET
+login
+^Z
+wr
+\end{verbatim}
+
+\section{Enabling Telnet}
+
+To enable telnet, you must have a password in the VTY lines.
+
+\begin{verbatim}
+conf t
+line vty 0 4
+password SECRET
+login
+^Z
+wr
+\end{verbatim}
+
+\texttt{line vty 0 4} means 5 virtual terminal lines\\
+
+When telnetting in, by default you are in user exec mode.
+
+\section{Command Modes}
+
+\begin{description}
+
+\item[$>$ in prompt]
+user exec mode
+
+\item[\# in prompt]
+privileged exec mode (root), to get to this mode use the enable command
+
+\end{description}
+
+\texttt{conf t} (configure terminal) enters global configuration mode.\\
+
+\texttt{enable password SECRET} sets the password in clear text (can be seen
+in configuration).\\
+
+\texttt{enable secret SECRET} sets the password encrypted (shows hashed in
+configuration), takes precedence over enable password, always the preferred
+method.\\
+
+\texttt{enable secret 5 XXX} in the configuration means encryption level 5.\\
+
+When users connect via telnet, an enable password is mandatory.\\
+
+No password is required for the console, but it is recommended.\\
+
+The password on VTY lines must be set to allow telnet or ssh.
+
+\subsection{Automatically Enabling Privileged Mode}
+
+To automatically enable privileged exec when a user logs in via telnet, set
+privilege level to 15:
+
+\begin{verbatim}
+conf t
+line vty 0 4
+privilege level 15
+\end{verbatim}
+
+\section{Setting up SSH}
+
+When using telnet, nothing is encrypted, including passwords. SSH encrypts
+everything.
+
+\begin{verbatim}
+conf t
+line vty 0 4
+no password SECRET
+no login
+^Z
+
+conf t
+line vty 0 4
+login local
+exit
+username test password SECRET
+^Z
+wr
+\end{verbatim}
+
+SSH requires the following to be set in the global configuration:
+
+\begin{verbatim}
+ip domain-name
+crypto key generate rsa
+\end{verbatim}
+
+And on the VTY lines:
+
+\begin{verbatim}
+transport input ssh
+\end{verbatim}
+
+\subsection{Setting User Privilege}
+
+\begin{verbatim}
+username test privilege 15 password SECRET
+\end{verbatim}
+
+\section{LEDs}
+
+\begin{description}
+
+\item[green]
+good
+
+\item[amber]
+a problem only if it remains on
+
+\item[dark]
+bad
+
+\end{description}
+
+\begin{description}
+
+\item[SYST]
+system, if it's green the switch is on, if dark, off, amber means
+Power On Self Test (POST) failed (broken fan, etc.)
+
+\item[RPS]
+redundant power supply, green means ok
+
+\item[STAT]
+when green, port status lights are operational
+
+\item[DUPLEX]
+green means full duplex, off means half duplex
+
+\item[SPEED]
+green is 100 Mbps, dark is 10 Mbps, flashing green is 1000 Mbps
+
+\end{description}
+
+When connecting two switches, and you don't see any lights, you may have used
+a straight-through cable instead of a crossover cable.\\
+
+\section{Switch Management Interface}
+
+For users to connect to a switch via telnet or SSH, it must have an IP address
+assigned to vlan 1 (the switch management interface).
+
+\begin{verbatim}
+interface vlan1
+ip address 192.168.0.2 255.255.255.0
+no shutdown
+show interface vlan 1
+\end{verbatim}
+
+\section{Assigning a Default Gateway to a Switch}
+
+\begin{verbatim}
+ip default-gateway 192.168.0.1
+\end{verbatim}
+
+\section{Interface Range}
+
+To apply the same command to a range of interfaces at once:
+
+\begin{verbatim}
+interface range fast 0/1 - 6
+speed 100
+\end{verbatim}
+
+\section{Banner}
+
+\subsection{motd}
+
+motd is shown after connect.
+
+\begin{verbatim}
+conf t
+banner motd $
+This is the message text. $
+\end{verbatim}
+
+\subsection{login}
+
+login banner is shown before login.
+
+\begin{verbatim}
+conf t
+banner login $
+Hackers log off now. $
+\end{verbatim}
+
+\subsection{exec}
+
+exec banner is shown after login.
+
+\begin{verbatim}
+conf t
+banner exec $
+Welcome. $
+\end{verbatim}
+
+\section{logging synchronous}
+
+Hold logging messages until user input and output is done, so log messages
+don't display in the middle of user input and output.
+
+\begin{verbatim}
+conf t
+line con 0
+logging synchronous
+\end{verbatim}
+
+\section{exec-timeout}
+
+exec-timeout sets the session inactivity timer (amount of time before you will
+be automatically logged out). The first number is in minutes, the second
+is in seconds. 0 0 disables session timeout.
+
+\begin{verbatim}
+conf t
+line con 0
+exec-timeout 0 0
+\end{verbatim}
+
+\section{Command Abbreviations}
+
+\begin{tabular}{ | c | c | }
+\hline
+Up arrow or Control P & previous in command history \\ \hline
+Down arrow or Control N & next in command history \\ \hline
+Control A & go to beginning of current command \\ \hline
+Control E & go to end of current command \\ \hline
+Left arrow or Control B & back one character in current command \\ \hline
+Right arrow or Control F & forward one character in current command \\ \hline
+Backspace or Control D & delete one character in current command \\ \hline
+ESC B & back one word in current command \\ \hline
+ESC F & forward one word in current command \\ \hline
+\end{tabular}
+
+\section{History}
+
+\texttt{show history} shows the last 10 commands that you ran at this level.\\
+
+To set history size:
+
+\begin{verbatim}
+conf t
+line con 0
+history size 20
+\end{verbatim}
+
+\end{document}
