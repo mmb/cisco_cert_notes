@@ -1,0 +1,127 @@
+\documentclass{article}
+
+\begin{document}
+
+\begin{description}
+
+\item[host]
+network device with an IP address
+
+\end{description}
+
+\section{Converting Dotted Decimal to a Binary String}
+
+Convert 192.168.1.100 to a binary string.\\
+
+Each part is a decimal representation of a binary string (a string of 1's and
+0's).\\
+
+The remainder starts as the number being converted.\\
+
+From left to right, if the column number is less than or equal to the
+remainder, put a 1 in the column and subtract the column number from the
+remainder.\\
+
+\begin{tabular}{ | r | r | r | r | r | r | r | r | r | }
+\hline
+    & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1 \\ \hline
+192 &   1 &  1 &  0 &  0 & 0 & 0 & 0 & 0 \\ \hline
+168 &   1 &  0 &  1 &  0 & 1 & 0 & 0 & 0 \\ \hline
+  1 &   0 &  0 &  0 &  0 & 0 & 0 & 0 & 1 \\ \hline
+100 &   0 &  1 &  1 &  0 & 0 & 1 & 0 & 0 \\ \hline
+\end{tabular}\\
+
+\begin{tabular}{ | r | r | r | r | r | r | r | r | r | }
+\hline
+    & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1 \\ \hline
+255 &   1 &  1 &  1 &  1 & 1 & 1 & 1 & 1 \\ \hline
+255 &   1 &  1 &  1 &  1 & 1 & 1 & 1 & 1 \\ \hline
+255 &   1 &  1 &  1 &  1 & 1 & 1 & 1 & 1 \\ \hline
+  0 &   0 &  0 &  0 &  0 & 0 & 0 & 0 & 0 \\ \hline
+\end{tabular}
+
+\section{Subnetting}
+
+The subnet mask tells which bits of the address are the network bits and
+which are the host bits.\\
+
+255.255.255.0 has 24 network bits and 8 host bits.\\
+
+In 192.168.1.100 255.255.255.0, 192.168.1 is the network part.\\
+
+Any IP addresses that have the same network portion are on the same subnet.\\
+
+In the network is configured correctly, different subnets should be on different
+``sides'' of the router.\\
+
+Hosts on the same subnet should not be separated by a router.
+
+\section{IP Address Classes}
+
+RFC 791 defines IP address classes.
+
+\begin{tabular}{ | c | c | c | p{1cm} | p{1cm} | p{4cm} | }
+\hline
+Class & First octet & Default netmask & Default network bits & Default host bits & Notes \\ \hline
+Class A & 1 - 126 & 255.0.0.0 & 8 & 24 & \\ \hline
+Class B & 128 - 191 & 255.255.0.0 & 16 & 16 & \\ \hline
+Class C & 192 - 223 & 255.255.255.0 & 24 & 8 & \\ \hline
+Class D & 224 - 239 & & & & reserved for multicasting \\ \hline
+Class E & 240 - 255 & & & & reserved for future use, experimental \\ \hline
+\end{tabular}\\
+
+Any address with a first octet of 127 is reserved for loopback interfaces
+(but not for Cisco router loopback interfaces).\\
+
+Know:
+
+\begin{itemize}
+
+\item how to identify the class of an address
+\item which addresses can be assigned to hosts (A, B, C)
+\item which addresses cannot be assigned to hosts (D, E, 127)
+\item default network mask, network bits and host bits for A, B, C
+
+\end{itemize}
+
+\section{Private IP Address Ranges}
+
+RFC 1918 defines private address ranges. They are used for internal networks.\\
+
+\begin{tabular}{ | c | c | c | c | }
+\hline
+Class & Private address range & Private address netmask & Private address prefix \\ \hline
+Class A & 10.0.0.0 - 10.255.255.255 & 10.0.0.0 255.0.0.0 & 10.0.0.0/8 \\ \hline
+Class B & 172.16.0.0 - 172.31.255.255 & 172.16.0.0 255.240.0.0 & 172.168.0.0/12 \\ \hline
+Class C & 192.168.0.0 - 192.168.255.255 & 192.168.0.0 255.255.0.0 & 192.168.0.0/16 \\ \hline
+\end{tabular}
+
+\section{Routing}
+
+When a PC wants to send data, there are two possibilites: the destination
+is on the same network or it's on another network.\\
+
+If they are on the same network, the router does not need to get involved.\\
+
+If the sending hosts knows it's not on same network as the destination, it will
+send the packets to its default gateway.\\
+
+When a router receives a packet there are 3 possibilities:
+
+\begin{enumerate}
+
+\item destined for a directly connected network
+\item destined for a non-directly connected network that the router has an
+entry for in its routing table
+\item destined for a non-directly connected network that the router does not
+have an entry for in its routing table
+
+\end{enumerate}
+
+\texttt{show ip route} shows the routes on a router\\
+
+Static routes are create with the ip route command. For example:\\
+
+\texttt{ip route 30.0.0.0 255.0.0.0 ethernet1}\\
+
+\end{document}
