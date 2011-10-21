@@ -1,0 +1,115 @@
+\documentclass{article}
+
+\begin{document}
+
+Data going from host A to host B must have a destination IP address for host B
+and a destination MAC address for host B.
+
+\section{DNS process}
+
+Each host has the IP address of at least one DNS server.\\
+
+The DNS server address can be hardcoded on the host or it can be obtained
+via DHCP.\\
+
+A host asks its DNS server what the IP address of the destination host is.
+
+\section{ARP}
+
+\begin{description}
+
+\item[Address resolution protocol]
+allows a host to get a remote device's layer 2 address when it knows the
+remote device's layer 3 address
+
+\end{description}
+
+There are no ARP servers.\\
+
+ARP process uses a series of broadcasts and (unicast) replies.\\
+
+If host A needs host B's MAC address:
+
+\begin{enumerate}
+
+\item host A sends out a layer 2 broadcast, the source MAC address will be
+host A's MAC, the destination MAC will be ff:ff:ff:ff:ff:ff, source IP address
+will be host A's IP, destination IP will be host B's IP address
+
+\item the only device that will reply is the one whose IP address is the
+destination IP address of the ARP request, it will unicast a reply to host A
+telling host A its MAC address
+
+\item host A now knows host B's IP and MAC, so it can send data to host B
+
+\end{enumerate}
+
+\subsection{ARP Caches}
+
+Hosts build their own ARP caches to limit broadcasts.\\
+
+\texttt{arp -a} to see the ARP cache in Windows.\\
+
+Routers also keep ARP caches which can be viewed with the command
+\texttt{show arp}.
+
+\subsection{Proxy ARP}
+
+Switches don't affect the ARP process (they just forward), but routers do.\\
+
+Routers do not forward broadcasts. Instead they use proxy ARP to answer the
+ARP request with the MAC address of the router interface that received the
+original request. The requesting host has no idea that the MAC address it
+has received is actually the MAC address of a router interface and not the
+MAC address of the destination host.\\
+
+To get the actual MAC address of a destination host, the router will consult
+its ARP cache or generate an ARP request of its own.
+
+\section{DCHP}
+
+For a host to communicate with another host it needs to have the following
+configured on it:\\
+
+\begin{itemize}
+
+\item IP address
+\item network mask
+\item IP addresses of DNS servers
+\item default gateway
+
+\end{itemize}
+
+This could all be configured manually on each host, or it could be configured
+using DHCP (dynamic host configuration protocol). DHCP is easier to manage.
+
+\subsection{DHCP Process}
+
+\begin{enumerate}
+
+\item DHCP client broadcasts DHCP DISCOVER, since it is broadcast it will not
+be forwarded by routers
+
+\item any DHCP server can broadcast a DHCP OFFER, which contains the IP
+address, network mask, and lease time (amount of time the client is allowed to
+use the configuration) that the DHCP server is offering, as well as the IP
+address of the DHCP server making the offer
+
+\item client may receive more than one DHCP OFFER and will accept the first
+one it receives by sending a DHCP REQUEST, the DHCP REQUEST is broadcast and
+when other DHCP servers see that their offer was not accepted they will
+return the IP address they offered to their address pool
+
+\item the DHCP server sends the client a DHCP ACKNOWLEDGEMENT with the rest of
+the information it needs
+
+\end{enumerate}
+
+\subsection{Cisco Routers as DHCP Servers}
+
+Some Cisco routers can act as DHCP servers.\\
+
+Cisco Security Device Manager (SDM) is a GUI tool that can be used to
+configure a DHCP server.
+
+\end{document}
