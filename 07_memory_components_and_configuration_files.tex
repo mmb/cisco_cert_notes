@@ -1,0 +1,119 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{ROM, RAM, NVRAM and Flash}
+
+\begin{description}
+
+\item[ROM]
+read-only memory, stores the router's startup bootstrap program, operating
+system software, and power-on diagnostic test programs (POST)
+
+\item[Flash Memory]
+where IOS images are kept, erasable and reprogrammable ROM, retained by the
+router on reload
+
+\item[RAM]
+random access memory, stores operational information such as routing tables
+and the running configuration file, lost when router is powered down or
+reloaded
+
+\item[NVRAM]
+non-volatile RAM, holds the router's startup configuration file, not lost
+when router is powered down or reloaded
+\end{description}
+
+\section{Cisco Router Boot Process}
+
+\begin{enumerate}
+
+\item A series of POSTs (power-on self test) are run that verify the basic
+operation of network interfaces, memory and CPU. Detects major problems early
+in the boot process, such as a broken fan.
+
+\item If the router passes POST, it looks for a source to load an IOS
+(internetwork operating system) image from. It will look, in order, in
+Flash memory, a TFTP (trivial file transfer protocol) server, and ROM (like
+Windows safe mode). This order can be changed in the configuration register.
+
+\item Once the IOS image is found, the router will look for a startup
+configuration file. It will look in NVRAM first, and if not found it will
+look for a TFTP server with a startup file. If no valid startup
+configuration file is found, the router enters setup mode and runs the
+system configuration dialog.
+
+\end{enumerate}
+
+Out of the box a Cisco router or switch has no configuration. It must
+be configured using either setup mode or the CLI.\\
+
+Control-C can be used to abort setup mode.\\
+
+To enter setup mode from the router prompt use the \texttt{setup} command.\\
+
+\section{Configuration Files}
+
+A router has two configuration files at any given time: start-config and
+running-config. They usually have the same contents but can differ if you
+change the running configuration but do not \texttt{copy run start}.\\
+
+\subsection{copy command}
+
+\texttt{copy <from> <to>}
+
+\section{Configuration Backups}
+
+Can be useful when:
+
+\begin{itemize}
+
+\item network attackers change or delete the configuration
+\item a network engineer makes a mistake
+\item the configuration gets corrupted
+
+\end{itemize}
+
+A TFTP server can be used for backups.\\
+
+\section{IOS Updates}
+
+There are many different IOS images on Cisco's website and which ones you have
+access to depends on your service level.\\
+
+As a new IOS image is loaded exclamation points show progress. If they stop
+for an extended period, there is a problem with the copy.\\
+
+After a new IOS has been loaded to Flash, the router needs to be reloaded.\\
+
+\texttt{show flash} shows how much free space is available in Flash.
+
+\section{Configuration Register}
+
+\texttt{show version} shows the current configuration register value.\\
+
+The \texttt{config-register} command changes the configuration register value.
+Changing the configuration register value requires a reload to take effect.
+Using an invalid value can brick the router.\\
+
+Common configuration register settings:
+
+\begin{description}
+
+\item[0x2102]
+default, router looks for startup config in NVRAM and for IOS image in Flash
+
+\item[0x2142]
+NVRAM contents are bypassed, startup configuration is ignored
+
+\item[0x2100]
+router boots into ROM monitor mode
+
+\end{description}
+
+You have to be physically present at the router to perform password recovery.\\
+
+You must remember to change the configuration register back to 0x2102 after
+using another value (such as after a password reset).
+
+\end{document}
