@@ -1,0 +1,208 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{The Secret of Binary Success}
+
+It is easier to learn binary math than to try to learn tricks for binary math.
+
+\section{Decimal to Binary}
+
+Convert 231 and 123 to binary strings.\\
+
+The remainder starts as the number being converted.\\
+
+From left to right, if the column number is less than or equal to the
+remainder, put a 1 in the column and subtract the column number from the
+remainder.\\
+
+\begin{tabular}{ | r | r | r | r | r | r | r | r | r | }
+\hline
+    & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1 \\ \hline
+231 &   1 &  1 &  1 &  0 & 0 & 1 & 1 & 1 \\ \hline
+123 &   0 &  1 &  1 &  1 & 1 & 0 & 1 & 1 \\ \hline
+\end{tabular}
+
+\section{Binary to Decimal}
+
+Convert 10101010 to decimal.\\
+
+Add the columns that contain a 1.\\
+
+\begin{tabular}{ | r | r | r | r | r | r | r | r | }
+\hline
+128 & 64 & 32 & 16 & 8 & 4 & 2 & 1 \\ \hline
+  1 &  0 &  1 &  0 & 1 & 0 & 1 & 0 \\ \hline
+\end{tabular}
+
+\begin{equation}
+128 + 32 + 8 + 2 = 170
+\end{equation}
+
+\section{Subnetting Basics}
+
+\begin{description}
+  
+\item[Class A]
+1 - 126, 8 network bits, 24 host bits, default mask 255.0.0.0
+\item[Class B]
+128 - 191, 16 network bits, 16 host bits, default mask 255.255.0.0
+\item[Class C]
+192 - 223, 24 network bits, 8 host bits, default mask 255.255.255.0
+
+\end{description}
+
+17.1.1.1 is class A so it has 8 network bits and 24 host bits. The network
+part is 17 and the host part is 1.1.1.\\
+
+Subnetting is borrowing host bits. It conserves addresses by allowing the
+use of smaller sized network blocks.
+
+\section{Calculating the Number of Valid Subnets}
+
+The number of valid subnets is:
+
+\begin{equation}
+2 ^ {\mbox{ number of subnet bits}}
+\end{equation}
+
+If you see 'no ip subnet-zero' near the top of the configuration, you need to
+subtract 2 to get the correct answer. That means the routing protocol is
+classful (RIPv1 or IGRP).\\
+
+If a classless protocol is being used (RIPv2, EIGRP, OSPF) you should not
+subtract 2. In this case 'ip subnet-zero' will appear in the configuration
+(this is the default setting).\\
+
+The term VLSM (variable-length subnet masking) is used.\\
+
+If no additional information is given, you should not subtract 2.\\
+
+Example:\\
+
+Network is 172.20.0.0, subnet mask is 255.255.255.0 (/24)\\
+
+It's a class B, so the default mask is 255.255.0.0.
+
+\begin{verbatim}
+class B default mask 11111111 11111111 00000000 00000000
+                 /24 11111111 11111111 11111111 00000000
+\end{verbatim}
+
+The bits where the default mask and subnet mask both have 0's are the host
+bits.\\
+
+The bits where they share 1's are the network bits.\\
+
+The bits where the default mask has 0's but the subnet mask has 1's are the
+subnet bits (the bits that are borrowed from the host bits).\\
+
+There are 8 subnet bits, so there are:
+
+\begin{equation}
+2 ^ 8 = 256 \mbox{ valid subnets}
+\end{equation}
+
+\section{Prefix Notation}
+
+Prefix notation is a slash followed by the number of 1's in the mask.\\
+
+/24 means 24 1's at the beginning of the mask.
+
+\section{Calculating Number of Valid Host Addresses in a Subnet}
+
+The number of valid hosts on a subnet is:
+
+\begin{equation}
+2 ^ {\mbox{ number of host bits}} - 2
+\end{equation}
+
+Example:\\
+
+150.50.50.0 /24\\
+
+150.50.50.0 is a class B, so the default network mask is /16.
+
+\begin{verbatim}
+class B default mask 11111111 11111111 00000000 00000000
+                 /24 11111111 11111111 11111111 00000000
+\end{verbatim}
+
+There are 8 host bits, so
+
+\begin{equation}
+2 ^ 8 - 2 = 254 \mbox{ valid hosts}
+\end{equation}
+
+The two hosts that are subtracted are the network address (the first address in
+the range) and the broadcast address (the last address in the range).
+
+\section{Calculating the Subnet Number of a Given IP Address}
+
+Convert both the IP address and its subnet mask to binary and boolean AND
+them together (if both bits are 1, the result is 1, otherwise the result is
+0).\\
+
+Examples:
+
+\begin{verbatim}
+178.56.21.9 10110010 00111000 00010101 00001001
+        /24 11111111 11111111 11111111 00000000
+            10110010 00111000 00010101 00000000 = 178.56.21.0 /24
+\end{verbatim}
+
+\begin{verbatim}
+200.154.150.89 11001000 10011010 10010110 01011001
+           /27 11111111 11111111 11111111 11100000
+               11001000 10011010 10010110 01000000 = 200.154.150.64 /27
+\end{verbatim}
+
+\section{Determining the Range of Valid Host Addresses on a Subnet}
+
+To determine the range of valid host addresses in a subnet, first determine
+how many overall host addresses are in that subnet. The first address is the
+network number and is not a valid host address. The last address is the
+broadcast address and is not a valid host address. All the addresses in
+between are valid host addresses.\\
+
+Example:
+
+\begin{verbatim}
+200.154.150.89 11001000 10011010 10010110 01011001
+           /27 11111111 11111111 11111111 11100000
+200.154.150.64 11001000 10011010 10010110 01000000
+\end{verbatim}
+
+There are 5 host bits. The first address in the range is 200.154.150.64.\\
+
+To get the last address, calculate the value with all host bits were set to 1.\\
+
+11001000 10011010 10010110 01011111 = 200.154.150.95\\
+
+The valid host addresses are 200.154.150.65 - 200.154.150.94.
+
+\section{Meeting Stated Design Requirements}
+
+Your network uses Class B network 165.10.0.0. We need at least 150 subnets
+that have no more than 200 hosts each. Which subnet mask should you use?\\
+
+\begin{equation}
+\mbox{number of subnets} = 2 ^{\mbox{ number of subnet bits}}
+\end{equation}
+
+\begin{equation}
+\mbox{number of valid hosts} = 2 ^{\mbox{ number of host bits}} - 2
+\end{equation}
+
+165.10.0.0 is a class B.
+
+\begin{verbatim}
+165.10.0.0           10100101 00001010 00000000 00000000
+default network mask 11111111 11111111 00000000 00000000 (/16)
+\end{verbatim}
+
+9 bits for the network part gives 512 subnets, 126 valid hosts per subnet.\\
+
+The subnet mask should be 255.255.255.128 (/25).
+
+\end{document}
