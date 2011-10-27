@@ -1,0 +1,184 @@
+\documentclass{article}
+
+\begin{document}
+
+In the examples the last octet of the IP address for any physical interface
+is the router number. For loopbacks, each octet is the router number.\\
+
+In a network diagram if a line looks like it doesn't connect to anything
+it's a loopback interface.\\
+
+When you ping a remote address, you are sending five ICMP echo packets to
+the destination.\\
+
+When there are no static routes and no routing protocols running, you can
+still talk to hosts on the same subnet.
+
+\section{Adding a Loopback Interface}
+
+\begin{verbatim}
+conf t
+int loopback 0
+ip address 2.2.2.2 255.255.255.0
+^Z
+wr
+show int loopback0
+\end{verbatim}
+
+\section{debug ip packet}
+
+Never use this on a production network.
+
+\begin{verbatim}
+debug ip packet
+ping 172.12.123.2
+no debug ip packet
+\end{verbatim}
+
+\texttt{u all} or \texttt{undebug all} turns off all debugging. It's a safe
+way to make sure you don't leave any debugs on when you are done.
+
+\section{Static Routing}
+
+The \texttt{ip route} command creates static routes. A static route can
+be to a given host or network or it can be to a a default route (a route that
+will be used when there is no other match in the routing table).\\
+
+\begin{verbatim}
+conf t
+ip route 2.2.2.0 255.255.255.0 172.12.123.1
+^Z
+copy run start
+show ip route
+ping 2.2.2.2
+\end{verbatim}
+
+A route's destination can either be:
+
+\begin{itemize}
+\item the local router's exit interface (NOT the IP address)
+\item the remote router's IP address
+\end{itemize}
+
+When you send pings it's not enough for the local router to have connectivity
+to the remote network. The downstream routers also need connectivity to that
+network.\\
+
+\subsection{Default Routes}
+
+\begin{verbatim}
+conf t
+ip route 0.0.0.0 0.0.0.0 172.12.123.2
+^Z
+copy run start
+\end{verbatim}
+
+The destination and network mask for a default static route are all 0's.
+As with a normal static route the next hop can be an IP address or an
+interface on the local router.\\
+
+Default static routes serve two major purposes:
+
+\begin{enumerate}
+\item sending data to networks that have no specific entry in the routing
+table
+\item reducing the size of the routing table
+\end{enumerate}
+
+\subsection{Host Routes}
+
+Host routes are routes that only match one host (255.255.255.255 mask).
+
+\begin{verbatim}
+ip route 2.2.2.2 255.255.255.255 172.12.123.1
+\end{verbatim}
+
+\subsection{Why Not to Use Static Routes}
+
+Static routes have their place but are not very scalable. They do not
+dynamically adapt to network changes and can be hard to manage as the network
+grows.
+
+\section{Dynamic Routing Protocols}
+
+\begin{description}
+\item[RIP]
+Routing Information Protocol
+\item[IGRP]
+Integrated Gateway Routing Protocol
+\item[EIGRP]
+Enhanced Integrated Gateway Routing Protocol
+\item[OSPF]
+Open Shortest Path First
+\end{description}
+
+\subsection{RIP}
+
+There are two version of RIP. Today RIPv2 is almost always used.\\
+
+To remove static routes \texttt{no ip route ...}.\\
+
+When a router is configured to run RIP, the router will send routing updates
+out the interfaces that are RIP-enabled.
+
+\begin{verbatim}
+conf t
+router rip
+no auto-summary
+network 172.12.123.0
+network 1.0.0.0
+^Z
+show ip protocols
+\end{verbatim}
+
+By default RIP will send version 1 updates, but will accept any version.
+
+\subsection{RIP Versions}
+
+\begin{description}
+\item[RIPv1]
+classful, no VLSM, no manual route summarization
+\item[RIPv2]
+classless, VLSM support, manual route summarization support
+\end{description}
+
+To force RIP to send and receive only v2, use the \texttt{version 2}
+command under the RIP process.
+
+\begin{verbatim}
+conf t
+router rip
+version 2
+^Z
+show ip protocols
+\end{verbatim}
+
+RIPv2 multicasts its updates to 224.0.0.9.\\
+
+RIPv1 broadcasts its updates.\\
+
+\texttt{show ip route rip} shows only routes discovered by RIP.\\
+
+The two numbers in brackets in the output are [administrative distance/metric].\\
+
+Directly connected routes show up as connected (C) instead of RIP (R) because
+their administrative distance is lower (their existence is more believable
+because the router knows about them firsthand).\\
+
+To debug rip:
+
+\begin{verbatim}
+debug ip rip  
+\end{verbatim}
+
+\subsection{RIP Metrics}
+
+The metric for RIP (versions 1 and 2) is hop count. Hop count is a measurement
+of how far it is to to a remote destination. This is a serious limitation for
+wide area networks (WANs) because RIP considers only hops and does not take
+into account the speed of links.\\
+
+\texttt{clear ip route *} clears all dynamic routes. Don't use it in
+production.
+
+\end{document}
