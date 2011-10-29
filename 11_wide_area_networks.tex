@@ -1,0 +1,220 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{WAN Physical Devices}
+
+\begin{description}
+
+\item[CSU/DSU]
+channel service unit / data service unit, service provider's half of the
+communication, connects to local routers and tells the router the clock rate
+(the speed at which it can send and receive data)
+
+\item[demarcation point]
+the point where responsibilty for the physical devices passes from the
+network administrator to the service provider
+\end{description}
+
+The CSU/DSU and the cable connecting it to the router are the customer's
+responsibility. The cabling on the other side of the CSU/DSU is the service
+provider's responsibility.
+
+\subsection{DCE and DTE}
+
+The DCE (data communications equipment) provides the clock rate. The DTE
+(data terminal equipment) receives the clock rate. By default a Cisco
+router acts as the DTE.\\
+
+You can connect two Cisco routers using a DTE/DCE cable connected to their
+serial interfaces. One router serves as the DCE. This is a common setup
+for home labs.\\
+
+\begin{verbatim}
+show controller serial 1  
+\end{verbatim}
+
+Shows no cable, DCE or DTE.\\
+
+\begin{verbatim}
+show int serial1
+\end{verbatim}
+
+First line of output refers to physical state, logical state.
+
+\subsection{Setting Clock Rate on DCE}
+
+\begin{verbatim}
+conf t
+int serial1
+clock rate 56000
+^Z
+wr
+show int s1
+\end{verbatim}
+
+When working with line protocols, it's not enough for the connection to
+come up. It has to stay up.\\
+
+\subsection{Troubleshooting Interfaces}
+
+\begin{itemize}
+
+\item if the interface shows as administratively down, it's simply shut
+down and needs to be opened
+
+\item if the interface shows as down, there is a physical problem (maybe
+a loose cable)
+
+\item if the interface is up but the line protocol is down, physically
+all is well but there is a logical issue, most likely an encapsulation
+mismatch or a missing clock rate
+
+\end{itemize}
+
+\section{Encapsulation Methods}
+
+HDLC and PPP are the two data-link layer (layer 2) protocols used for
+encapsulation on serial point-to-point links.\\
+
+HDLC is the default method on Cisco routers.\\
+
+The version of HDLC that runs on Cisco routers is proprietary so it cannot
+be used in environments with multiple vendors.\\
+
+PPP allows for data compression to save bandwidth and HDCL does not.\\
+
+PPP multilink allows multiple physical channels to be bundled into a single
+logical channel. HDLC does not support multilink.\\
+
+PPP allows the use of two authentication schemes (PAP and CHAP) and HDLC
+does not support either.\\
+
+To change encapsulation on an interface:
+
+\begin{verbatim}
+conf t
+int s1
+encapsulation ppp
+\end{verbatim}
+
+\section{An Introduction to Frame Relay}
+
+Frame relay is:
+
+\begin{itemize}
+\item cheap
+\item reliable
+\end{itemize}
+
+Ethernet interfaces on routers are only for LAN connections. Serial interfaces
+are for WAN connections.\\
+
+Frame relay providers guarantee a certain amount of bandwidth will be
+available at any given time. This guaranteed bandwidth is referred to as
+the CIR (committed information rate).\\
+
+A frame relay cloud is a collection of a frame relay provider's switches.
+All of the provider's switches are DCEs.\\
+
+A path through a frame relay cloud is called a virtual circuit. The data
+can take different paths through the cloud.\\
+
+Frame relay is a packet-switching protocol. The packets may take different
+paths and will be reassembled. Contrast with circuit-switching protocols
+which have dedicated paths.\\
+
+There are two types of virtual circuits. A PVC (permanent virtual circuit)
+is available at all times and a SVC (switched virtual circuit) is only
+available when certain criteria are met. PVC is more popular.
+
+\section{Network Address Translation}
+
+\begin{description}
+
+\item[NAT]
+network address translation  
+
+\item[PAT]
+port address translation
+
+\end{description}
+
+A common configuration is to have a pool of routable addresses and when a
+packet from the LAN goes out to the WAN the router will assign one. The
+router will maintain a NAT translation table that maps the routable addresses
+to the non-routable addresses. This is how it knows which private IP to
+send incoming packets on the WAN side to.\\
+
+Many organizations don't have enough routable addresses to do this.\\
+
+Port address translation (PAT) allows a network to use a single routable
+address to provide multiple hosts with internet access. The address is the
+same but the port number changes. It allows you to use the IP address that is
+already configured on the router's serial interface.\\
+
+The only device that knows NAT or PAT is being used is the router. It
+is transparent to devices on the both the LAN side and the WAN side.\\
+
+On the router there is no concept of PAT, both NAT and PAT are referred to
+as NAT.
+
+\begin{verbatim}
+show ip nat translations
+\end{verbatim}
+
+\begin{description}
+
+\item[inside global]
+what inside local addresses are translated into, routable addresses
+
+\item[inside local]
+used by hosts on inside network, non-routable addresses configured on the hosts
+
+\item[outside global]
+configured on outside (internet based) hosts
+
+\item[outside local]
+the actual addresses of remote hosts, probably non-routable
+
+\end{description}
+
+\section{ATM}
+
+ATM stands for asynchronous transfer mode. It does not handle frames like
+frame relay, but places data into cells (cell-switching) each of which is 53
+bytes (5 head and 48 data).\\
+
+ATM networks are faster than frame relay networks but are more expensive to
+build and maintain. They require specialized hardware.
+
+\section{Modems}
+
+A modem can and sometimes does take the place of a CSU/DSU.\\
+
+The word modem comes from modulation (digital to analog) and demodulation
+(analog to digital).\\
+
+Modems are not as fast as other methods and they tie up the phone line.
+
+\section{DSL}
+
+Asymmetric DSL works under the assumption that the user is going to download
+more information than they upload.\\
+
+ADSL allows phone calls and internet access on the same line at the same time.\\
+
+ADSL uses several different modulation methods, the most common of which
+is G.lite (G.922.2) which requires no splitter at the customer location.
+G.lite is slower than true ADSL but still faster than dialup.\\
+
+For symmetric DSL, the sending and receiving speeds are the same. The
+phone cannot be used at the same time with SDSL.\\
+
+VDSL (very high bit-rate DSL) can deliver speed up to 52 Mbps but maximum
+distance is 4000 feet over copper.\\
+
+RADSL (rate adaptive DSL) uses software to calculate the maximum download
+and upload speeds and dynamically adjust the rates.
+
+\end{document}
