@@ -1,0 +1,297 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{Where To Begin}
+
+Start at the physical layer of the OSI model. Is it turned on? Are you using
+the right cable? Is the cable loose?\\
+
+Crossover cables connect switches for trunking.\\
+
+Rollover cables connect a laptop to the console port of a router.
+
+\subsection{Cisco Disocvery Protocol}
+
+Cisco Discovery Protocol (CDP) can be used to check a Cisco device's physical
+connections. It runs by default on Cisco routers and switches. It can be
+enabled and disabled globally or per-interface.\\
+
+To see if CDP is enabled:
+
+\begin{verbatim}
+show cdp
+\end{verbatim}
+
+To turn off CDP globally:
+
+\begin{verbatim}
+conf t
+no cdp run
+^Z
+wr
+\end{verbatim}
+
+To turn on CDP globally:
+
+\begin{verbatim}
+conf t
+cdp run
+^Z
+wr
+\end{verbatim}
+
+\subsection{CDP Neighbors}
+
+\begin{verbatim}
+show cdp neighbor
+\end{verbatim}
+
+Headers in CDP neighbors output:
+
+\begin{description}
+
+\item[device ID]
+the hostname of the remote device
+
+\item[local interface]
+the interface on the local switch that is connected to the remote host
+
+\item[holdtime]
+number of seconds that the local device will retain the last CDP advertisement
+received from the remote host
+
+\item[capability]
+what type of device the remote host is
+
+\item[platform]
+the remote device's hardware platform
+
+\item[port ID]
+the remote device's interface on the direct connection
+
+\end{description}
+
+To get more detal (including the IP addresses of remote hosts):
+
+\begin{verbatim}
+show cdp neightbor detail
+\end{verbatim}
+
+To control CDP per interface:
+
+\begin{verbatim}
+conf t
+int fast 0/12
+no cdp enable
+\end{verbatim}
+
+\section{show interface Output}
+
+\begin{verbatim}
+show int serial0
+\end{verbatim}
+
+\begin{verbatim}
+Serial0 is administratively down, line protocol is down
+\end{verbatim}
+
+The interface is shut. Open it and wait a minute to make sure the line protocol
+stays up.
+
+\begin{verbatim}
+int serial0
+no shut
+\end{verbatim}
+
+\begin{verbatim}
+Serial0 is down, line protocol is down
+\end{verbatim}
+
+Interface is physically down. Check cables.
+
+\begin{verbatim}
+FastEthernet0/3 is down, line protocol is down (err-disabled)
+\end{verbatim}
+
+Could be port security violation.
+
+\begin{verbatim}
+Serial0 is up, line protocol is down
+\end{verbatim}
+
+Physically ok, could be encapsulation mismatch or clock rate problem.\\
+
+To show the MAC address table:
+
+\begin{verbatim}
+show mac-address-table
+show mac-address-table dynamic
+\end{verbatim}
+
+If you encounter a problem while configuring a router or switch, it's probably
+because of something you just did.
+
+\section{Troubleshooting with ping}
+
+Cannot ping 172.23.23.3.
+
+\begin{verbatim}
+show int ethernet0  
+\end{verbatim}
+
+Check if physical interface is administratively down.\\
+
+Check if IP address is configured on interface.
+
+\begin{verbatim}
+conf t
+int e0
+ip address 172.23.23.2 255.255.255.0
+no shut
+^Z
+wr
+\end{verbatim}
+
+Check VLAN port membership. If hosts are on different VLANs they will not be
+able to send IP packets to each other without a layer 3 device.
+
+\begin{verbatim}
+show vlan brief
+\end{verbatim}
+
+\section{PC Troubleshooting}
+
+Show host network settings:
+
+\begin{verbatim}
+ipconfig /all
+ping 127.0.0.1
+ping default gateway
+ping what you can't reach
+\end{verbatim}
+
+To release the PC's DHCP lease:
+
+\begin{verbatim}
+ipconfig /release
+\end{verbatim}
+
+To renew the PC's DHCP lease:
+
+\begin{verbatim}
+ipconfig /renew
+\end{verbatim}
+
+To display the host's routing table:
+
+\begin{verbatim}
+netstat -rn
+\end{verbatim}
+
+\section{WAN Troubleshooting}
+
+Cisco routes must have a password set on the VTY lines to allow telnet or
+ssh connections. Users must use an enable password or the VTY lines can be
+set up to put the user into enable mode immediately.\\
+
+telnet sends data in clear text. ssh encrypts all data but requires more
+configuration and possibly extra hardware.\\
+
+To show information about current telnet sessions:
+
+\begin{verbatim}
+show sessions
+\end{verbatim}
+
+To resume a telnet session by session id:
+
+\begin{verbatim}
+resume 3
+\end{verbatim}
+
+To suspend the current telnet session, hit Control-Shift-6 and then x.\\
+
+To disconnection an open session by session id:
+
+\begin{verbatim}
+disconnect 3
+\end{verbatim}
+
+\subsection{ping}
+
+Regular ping results:
+
+\begin{description}
+
+\item[!!!!!]
+ip connectivity to the destination is ok
+
+\item[.....]
+no ip connectivity to destination
+
+\item[U.U.U]
+the local router has a route to the destination, but a downstream router does
+not
+
+\end{description}
+
+\subsection{traceroute}
+
+For identifying which downstream router in a path does not have a route to
+the destination.
+
+\begin{verbatim}
+traceroute 208.109.62.234
+\end{verbatim}
+
+Control-Shift-6 is the escape sequence on Cisco routers. It will terminate
+the currently running ping, traceroute, etc..\\
+
+The Microsoft version of traceroute is called tracert.
+
+\subsection{Extended ping}
+
+You must be at the enable prompt to run extended ping.\\
+
+Enter \texttt{ping} and it will prompt you for options.
+
+\section{Route Administrative Distance}
+
+When multiple routes exist to a destination, the router will choose the
+longest match (for example a /26 route over a /24 route).\\
+
+If the prefix lengths are all the same, the administrative distance is used.
+The administrative distance is the first number in brackets in show ip route
+output. The lower the administrative distance, the more believable the
+route.\\
+
+\begin{tabular}{ | c | c | }
+\hline
+Route Source & Administrative distance \\ \hline
+directly connected &   0 \\ \hline
+static             &   1 \\ \hline
+EIGRP summary      &   5 \\ \hline
+internal EIGRP     &  90 \\ \hline
+IGRP               & 100 \\ \hline
+OSPF               & 110 \\ \hline
+ISIS               & 115 \\ \hline
+RIP                & 120 \\ \hline
+external EIGRP     & 170 \\ \hline
+iBGP               & 200 \\ \hline
+\end{tabular}
+
+\subsection{Floating Static Routes}
+
+Sometimes you might not want your static routes to have an administrative
+distance of 1. For example, to give one a higher administrative distance than
+RIP.
+
+\begin{verbatim}
+ip proute 1.1.1.1 255.255.255.255 172.12.23.23 121
+\end{verbatim}
+
+Troubleshooting is all about knowing the fundamentals and having a structured
+approach.
+
+\end{document}
