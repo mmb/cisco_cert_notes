@@ -1,0 +1,143 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{Firewalls}
+
+A firewall is the basic protection against internet-based attackers. A
+firewall is a physical device that filters packets heading for your network.
+The filters are set up to block attempts to harm your network.\\
+
+Firewalls can block traffic based on:
+
+\begin{description}
+
+\item[protocol]
+don't allow IPX
+
+\item[source IP address]
+don't allow any traffic from 172.10.1.0/24 to exit the network
+
+\item[port number]
+don't allow any traffic sourced from port 23 to enter the network
+
+\end{description}
+
+If users can't receive email, make sure the incoming POP3 port (110) is open.\\
+
+If users can't send email, make sure the outgoing SMTP port (25) is open.\\
+
+If you need to block users from accessing the web, make sure the outgoing
+HTTP port is blocked.
+
+\section{Proxy Servers}
+
+Proxy servers are used to cache web pages. They will request pages on behalf
+of the original requester. Another common use for proxies is filtering
+requests for specified web pages.\\
+
+Proxy servers can serve as a kind of firewall because they perform packet
+filtering.
+
+\section{Denial of Service Attacks}
+
+In a denial of service (DoS) attack, the attacker attempts to overwhelm a
+server with TCP connection requests. Legitimate users will be unable to get to
+the server due to network congestion. The attacked server's resources are so
+busy it cannot answer legitimate request or they crash under the load.\\
+
+A DoS attack is designed more to damage the network than to steal data.
+
+\section{Reconnaissance Attacks}
+
+In a reconnaissance attack, the attacker uses different techniques to gather
+information about your network's strengths and weaknesses. The intruder will
+return later to use this information.
+
+\section{Access Attacks}
+
+In an access attack data is compromised or stolen for personal use, financial
+gain, or to embarrass the target.
+
+\section{Cisco Adaptive Security Appliance}
+
+With so many threats, a firewall is not enough. The Cisco ASA Series controls
+network and application traffic and delivers flexible virtual private network
+(VPN) connectivity.\\
+
+Cisco uses the term ``anti-x'' to describe all of the protections the ASA
+offers (anti-virus, anti-spam, etc.).
+
+\section{Cisco Intruder Detection System}
+
+Cisco Intruder Detection System (IDS) provides complete intrusion protection.
+
+\section{Cisco Intrustion Prevention System}
+
+Cisco Intrusion Prevention System (IPS) is targeted more towards e-commerce.
+
+\section{Preventing Virus Attacks}
+
+Always keep your anti-virus program definitions up-to-date. Your network
+must be protected from both internal and external virus threats. An
+aggressive anti-virus strategy can greatly reduce your network's chance
+of being hit by a virus.\\
+
+A virus is a computer program that gets onto a computer without a user's
+knowledge and performs an action that could be mischeivous or destructive.
+Just like human viruses, they are spread by contact, frequently through
+email.\\
+
+A worm is a type of virus, but it can spread on its own without any help
+from the infected host. It can replicate itself.\\
+
+A trojan horse is a program installed by the user that looks legitimate
+but has a hidden payload that attacks the user. This a common way that
+keystroke loggers can get onto a user's computer.\\
+
+Periodically remind users:
+
+\begin{itemize}
+
+\item don't open email attachments from anyone outside the company
+
+\item don't download software and install it, especially ``fun and free''
+software, such as games, animated cursors, etc.
+
+\item don't open email from anyone you don't know
+
+\end{itemize}
+
+\subsection{Choosing and Configuring An Anti-virus Program}
+
+Choose one that updates automatically.\\
+
+The number one mistake that network admins and home PC owners make is not
+keeping the program up-to-date. New viruses are created every day. Anti-virus
+vendors monitor viruses and update virus definitions regularly.\\
+
+Even with anti-virus programs, 100\% protection isn't guaranteed.
+
+\subsubsection{Which Files Should be Scanned for Viruses}
+
+\begin{itemize}
+\item .com
+\item .exe
+\item .ocx
+\item .dll
+\item Microsoft Word Documents
+\end{itemize}
+
+If you turn your anti-virus program off temporarily, don't forget to turn it
+back on.
+
+\section{Locking Up Your Hardware}
+
+Lock it up.
+
+\section{Hiding a Sensitive Network}
+
+VLAN's aren't just for limiting broadcast scope. They are also a security
+feature. To hide hosts, put them in their own VLAN.
+
+\end{document}
