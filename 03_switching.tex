@@ -1,8 +1,6 @@
-\documentclass{article}
+\section{Switching}
 
-\begin{document}
-
-\section{Hubs and Repeaters}
+\subsection{Hubs and Repeaters}
 
 \begin{description}
 
@@ -25,12 +23,12 @@ Collision detection is done using CSMA/CD.\\
 
 A hub is one big broadcast domain.
 
-\section{Bridges}
+\subsection{Bridges}
 
 Bridges are places between multiple hubs. They create smaller collision
 domains, but still have only one broadcast domain.
 
-\section{Switches}
+\subsection{Switches}
 
 Each host connected to a switch has its own collision domain.\\
 
@@ -43,7 +41,7 @@ each host is in its own collision domain
 
 \end{description}
 
-\subsection{Packet Actions}
+\subsubsection{Packet Actions}
 
 When a packet comes into a switch, the switch will check its MAC table.\\
 
@@ -87,7 +85,7 @@ The default age-out time for dynamic MAC table entries is 300 seconds.\\
 
 VLAN 1 is the default VLAN on Cisco switches.
 
-\subsection{Forwarding Methods}
+\subsubsection{Forwarding Methods}
 
 When a switch decides to forward a frame, it will either:
 
@@ -110,7 +108,7 @@ checks first 64 bytes of of frame for errors, compromise
 FCS lets recipient determine if frame is corrupted. It provides error
 detection but not correction.
 
-\section{VLANs}
+\subsection{VLANs}
 
 \begin{description}
 
@@ -126,7 +124,7 @@ propagation.\\
 No traffic can be sent from one VLAN to another without the intervention of
 a layer 3 device (such as a router).
 
-\section{Switch Types}
+\subsection{Switch Types}
 
 The Cisco 3-layer switching model.
 
@@ -143,7 +141,7 @@ connect different buildings on a campus network
 
 \end{description}
 
-\section{Spanning Tree Protocol}
+\subsection{Spanning Tree Protocol}
 
 STP is used to prevent swtiching loops. It is enabled by default on Cisco
 routers.\\
@@ -153,7 +151,7 @@ path. Ports that are not on the best path will be put in blocking mode.\\
 
 The physically shortest path might not be the best one.
 
-\section{Switch Security}
+\subsection{Switch Security}
 
 \begin{itemize}
 
@@ -164,7 +162,7 @@ The physically shortest path might not be the best one.
 
 \end{itemize}
 
-\subsection{Port Security}
+\subsubsection{Port Security}
 
 Can be used to limit use of ports by MAC address.\\
 
@@ -206,5 +204,3 @@ the first MAC seen on the port is allowed
 
 When a port is in err-disabled state the port LED turns off and the port
 must be manually re-enabled.
-
-\end{document}

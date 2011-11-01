@@ -1,8 +1,6 @@
-\documentclass{article}
+\section{Wireless Networking}
 
-\begin{document}
-
-\section{Wireless Network Types}
+\subsection{Wireless Network Types}
 
 Wireless networks are created on wireless access points (WAPs).\\
 
@@ -11,13 +9,13 @@ network. The WAPs in a lily pad network can be owned by different companies.
 They create hotspots where Internet access is available and usually a username
 and password is required.
 
-\subsection{Ad-hoc Wireless Networks}
+\subsubsection{Ad-hoc Wireless Networks}
 
 An ad-hoc wireless network is a wireless network with no WAP where the hosts
 communicate directly. This is also known as an independent basic service set
 or IBSS.
 
-\subsection{Infrastructure WLANs}
+\subsubsection{Infrastructure WLANs}
 
 A more common configuration is an infrastructure WLAN. In this configuration
 all communication goes through the WAP.\\
@@ -37,7 +35,7 @@ extended service set, has multiple WAPs
 An ESS is the type of network with multiple cells that you would use when
 travelling.
 
-\section{Standards and Ranges}
+\subsection{Standards and Ranges}
 
 802.11 defines wi-fi overall.\\
 
@@ -56,11 +54,11 @@ also support the other.\\
 Microwave ovens and some wireless telephones also share the 2.4 GHz band
 and can cause interference. Solid objects can also cause problems.
 
-\section{Infrared Wireless}
+\subsection{Infrared Wireless}
 
 Infrared has a high data rate but a range that is too short to be practical.
 
-\section{Spread Spectrum}
+\subsection{Spread Spectrum}
 
 Spread spectrum is a method of spreading a signal over a range of frequencies.\\
 
@@ -93,7 +91,7 @@ Spreading the signal:
 
 \end{itemize}
 
-\section{Antenna Types}
+\subsection{Antenna Types}
 
 \begin{description}
 
@@ -110,7 +108,7 @@ point-to-multipoint antennas
 A Yagi antenna is helpful in bridging the distance between WAPs. Omni
 antennas are used for connecting hosts to WAPs.
 
-\section{CA vs CD}
+\subsection{CA vs CD}
 
 Ethernet has CSMA/CD and wireless networking has CSMA/CA (carrier sense
 multiple access with collision avoidance). CSMA/CA works much the same as
@@ -134,7 +132,7 @@ and not detected.\\
 Ethernet is capable of full duplex, but wireless networks are limited to half
 duplex.
 
-\section{SSIDs}
+\subsection{SSIDs}
 
 The SSID (service set identifier) is a name for a wireless network. If the
 wireless client's SSID matches the AP SSID, communication can proceed. The SSID
@@ -146,16 +144,16 @@ communication can proceed.\\
 
 If SSID broadcasting is disabled, the SSID must be set on the client.
 
-\section{MAC Address Authentication}
+\subsection{MAC Address Authentication}
 
 Similar to Cisco switch port security, APs can keep a list of secure MACs
 which are allowed to access the network.
 
-\section{WEP, WPA and WPA2}
+\subsection{WEP, WPA and WPA2}
 
 WEP came first. WPA evolved from WEP. WPA2 evolved from WPA.
 
-\subsection{WEP}
+\subsubsection{WEP}
 
 WEP stands for wired equivalent privacy.
 
@@ -174,7 +172,7 @@ authentication, any device can authenticate. If both devices are using WEP,
 but the client key does not match the AP key, authentication will succeed but
 data cannot be successfully passed.
 
-\subsection{WPA}
+\subsubsection{WPA}
 
 WPA stands for wi-if protected access. WPA works with all wireless NICs but
 may not be supported by old APs.
@@ -212,10 +210,8 @@ attack to compromise the passphrase
 
 \end{itemize}
 
-\subsection{WPA2}
+\subsubsection{WPA2}
 
 After WPA was ratified by the Wi-Fi Alliance, IEEE came out with 802.11i.
 After 802.11i, the Wi-Fi Aliiance came out with WPA2. 802.11i and WPA2 are
 fully compatible.
-
-\end{document}

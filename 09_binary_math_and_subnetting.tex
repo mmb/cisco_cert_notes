@@ -1,12 +1,10 @@
-\documentclass{article}
+\section{Binary Math and Subnetting}
 
-\begin{document}
-
-\section{The Secret of Binary Success}
+\subsection{The Secret of Binary Success}
 
 It is easier to learn binary math than to try to learn tricks for binary math.
 
-\section{Decimal to Binary}
+\subsection{Decimal to Binary}
 
 Convert 231 and 123 to binary strings.\\
 
@@ -23,7 +21,7 @@ remainder.\\
 123 &   0 &  1 &  1 &  1 & 1 & 0 & 1 & 1 \\ \hline
 \end{tabular}
 
-\section{Binary to Decimal}
+\subsection{Binary to Decimal}
 
 Convert 10101010 to decimal.\\
 
@@ -39,7 +37,7 @@ Add the columns that contain a 1.\\
 128 + 32 + 8 + 2 = 170
 \end{equation}
 
-\section{Subnetting Basics}
+\subsection{Subnetting Basics}
 
 \begin{description}
   
@@ -58,7 +56,7 @@ part is 17 and the host part is 1.1.1.\\
 Subnetting is borrowing host bits. It conserves addresses by allowing the
 use of smaller sized network blocks.
 
-\section{Calculating the Number of Valid Subnets}
+\subsection{Calculating the Number of Valid Subnets}
 
 The number of valid subnets is:
 
@@ -103,13 +101,13 @@ There are 8 subnet bits, so there are:
 2 ^ 8 = 256 \mbox{ valid subnets}
 \end{equation}
 
-\section{Prefix Notation}
+\subsection{Prefix Notation}
 
 Prefix notation is a slash followed by the number of 1's in the mask.\\
 
 /24 means 24 1's at the beginning of the mask.
 
-\section{Calculating Number of Valid Host Addresses in a Subnet}
+\subsection{Calculating Number of Valid Host Addresses in a Subnet}
 
 The number of valid hosts on a subnet is:
 
@@ -137,7 +135,7 @@ There are 8 host bits, so
 The two hosts that are subtracted are the network address (the first address in
 the range) and the broadcast address (the last address in the range).
 
-\section{Calculating the Subnet Number of a Given IP Address}
+\subsection{Calculating the Subnet Number of a Given IP Address}
 
 Convert both the IP address and its subnet mask to binary and boolean AND
 them together (if both bits are 1, the result is 1, otherwise the result is
@@ -157,7 +155,7 @@ Examples:
                11001000 10011010 10010110 01000000 = 200.154.150.64 /27
 \end{verbatim}
 
-\section{Determining the Range of Valid Host Addresses on a Subnet}
+\subsection{Determining the Range of Valid Host Addresses on a Subnet}
 
 To determine the range of valid host addresses in a subnet, first determine
 how many overall host addresses are in that subnet. The first address is the
@@ -181,7 +179,7 @@ To get the last address, calculate the value with all host bits were set to 1.\\
 
 The valid host addresses are 200.154.150.65 - 200.154.150.94.
 
-\section{Meeting Stated Design Requirements}
+\subsection{Meeting Stated Design Requirements}
 
 Your network uses Class B network 165.10.0.0. We need at least 150 subnets
 that have no more than 200 hosts each. Which subnet mask should you use?\\
@@ -204,5 +202,3 @@ default network mask 11111111 11111111 00000000 00000000 (/16)
 9 bits for the network part gives 512 subnets, 126 valid hosts per subnet.\\
 
 The subnet mask should be 255.255.255.128 (/25).
-
-\end{document}

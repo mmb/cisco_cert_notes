@@ -1,11 +1,9 @@
-\documentclass{article}
-
-\begin{document}
+\section{ARP, DNS and DHCP}
 
 Data going from host A to host B must have a destination IP address for host B
 and a destination MAC address for host B.
 
-\section{DNS process}
+\subsection{DNS process}
 
 Each host has the IP address of at least one DNS server.\\
 
@@ -14,7 +12,7 @@ via DHCP.\\
 
 A host asks its DNS server what the IP address of the destination host is.
 
-\section{ARP}
+\subsection{ARP}
 
 \begin{description}
 
@@ -44,7 +42,7 @@ telling host A its MAC address
 
 \end{enumerate}
 
-\subsection{ARP Caches}
+\subsubsection{ARP Caches}
 
 Hosts build their own ARP caches to limit broadcasts.\\
 
@@ -53,7 +51,7 @@ Hosts build their own ARP caches to limit broadcasts.\\
 Routers also keep ARP caches which can be viewed with the command
 \texttt{show arp}.
 
-\subsection{Proxy ARP}
+\subsubsection{Proxy ARP}
 
 Switches don't affect the ARP process (they just forward), but routers do.\\
 
@@ -66,7 +64,7 @@ MAC address of the destination host.\\
 To get the actual MAC address of a destination host, the router will consult
 its ARP cache or generate an ARP request of its own.
 
-\section{DCHP}
+\subsection{DCHP}
 
 For a host to communicate with another host it needs to have the following
 configured on it:\\
@@ -83,7 +81,7 @@ configured on it:\\
 This could all be configured manually on each host, or it could be configured
 using DHCP (dynamic host configuration protocol). DHCP is easier to manage.
 
-\subsection{DHCP Process}
+\subsubsection{DHCP Process}
 
 \begin{enumerate}
 
@@ -105,11 +103,9 @@ the information it needs
 
 \end{enumerate}
 
-\subsection{Cisco Routers as DHCP Servers}
+\subsubsection{Cisco Routers as DHCP Servers}
 
 Some Cisco routers can act as DHCP servers.\\
 
 Cisco Security Device Manager (SDM) is a GUI tool that can be used to
 configure a DHCP server.
-
-\end{document}

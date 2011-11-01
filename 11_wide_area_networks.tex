@@ -1,8 +1,6 @@
-\documentclass{article}
+\section{Wide Area Networks}
 
-\begin{document}
-
-\section{WAN Physical Devices}
+\subsection{WAN Physical Devices}
 
 \begin{description}
 
@@ -20,7 +18,7 @@ The CSU/DSU and the cable connecting it to the router are the customer's
 responsibility. The cabling on the other side of the CSU/DSU is the service
 provider's responsibility.
 
-\subsection{DCE and DTE}
+\subsubsection{DCE and DTE}
 
 The DCE (data communications equipment) provides the clock rate. The DTE
 (data terminal equipment) receives the clock rate. By default a Cisco
@@ -42,7 +40,7 @@ show int serial1
 
 First line of output refers to physical state, logical state.
 
-\subsection{Setting Clock Rate on DCE}
+\subsubsection{Setting Clock Rate on DCE}
 
 \begin{verbatim}
 conf t
@@ -56,7 +54,7 @@ show int s1
 When working with line protocols, it's not enough for the connection to
 come up. It has to stay up.\\
 
-\subsection{Troubleshooting Interfaces}
+\subsubsection{Troubleshooting Interfaces}
 
 \begin{itemize}
 
@@ -72,7 +70,7 @@ mismatch or a missing clock rate
 
 \end{itemize}
 
-\section{Encapsulation Methods}
+\subsection{Encapsulation Methods}
 
 HDLC and PPP are the two data-link layer (layer 2) protocols used for
 encapsulation on serial point-to-point links.\\
@@ -98,7 +96,7 @@ int s1
 encapsulation ppp
 \end{verbatim}
 
-\section{An Introduction to Frame Relay}
+\subsection{An Introduction to Frame Relay}
 
 Frame relay is:
 
@@ -128,7 +126,7 @@ There are two types of virtual circuits. A PVC (permanent virtual circuit)
 is available at all times and a SVC (switched virtual circuit) is only
 available when certain criteria are met. PVC is more popular.
 
-\section{Network Address Translation}
+\subsection{Network Address Translation}
 
 \begin{description}
 
@@ -179,7 +177,7 @@ the actual addresses of remote hosts, probably non-routable
 
 \end{description}
 
-\section{ATM}
+\subsection{ATM}
 
 ATM stands for asynchronous transfer mode. It does not handle frames like
 frame relay, but places data into cells (cell-switching) each of which is 53
@@ -188,7 +186,7 @@ bytes (5 head and 48 data).\\
 ATM networks are faster than frame relay networks but are more expensive to
 build and maintain. They require specialized hardware.
 
-\section{Modems}
+\subsection{Modems}
 
 A modem can and sometimes does take the place of a CSU/DSU.\\
 
@@ -197,7 +195,7 @@ The word modem comes from modulation (digital to analog) and demodulation
 
 Modems are not as fast as other methods and they tie up the phone line.
 
-\section{DSL}
+\subsection{DSL}
 
 Asymmetric DSL works under the assumption that the user is going to download
 more information than they upload.\\
@@ -216,5 +214,3 @@ distance is 4000 feet over copper.\\
 
 RADSL (rate adaptive DSL) uses software to calculate the maximum download
 and upload speeds and dynamically adjust the rates.
-
-\end{document}

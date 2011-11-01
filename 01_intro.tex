@@ -1,8 +1,6 @@
-\documentclass{article}
+\section{Introduction to Networking and the Networking Models}
 
-\begin{document}
-
-\section{OSI Model}
+\subsection{OSI Model}
 
 \begin{tabular}{ | c | c | }
 \hline
@@ -51,7 +49,7 @@ Layer 3 switches exist.\\
 
 Data flows down the model, then back up.
 
-\subsection{Data units}
+\subsubsection{Data units}
 
 \begin{tabular}{ | c | c | }
 \hline
@@ -76,7 +74,7 @@ interaction between adjacent layers on the same host
 
 \end{description}
 
-\section{TCP/IP Model}
+\subsection{TCP/IP Model}
 
 \begin{tabular}{ | c | c | }
 \hline
@@ -87,7 +85,7 @@ internet & network \\ \hline
 network access & data link, physical\\ \hline
 \end{tabular}
 
-\section{TCP}
+\subsection{TCP}
 
 \begin{itemize}
 
@@ -98,7 +96,7 @@ network access & data link, physical\\ \hline
 
 \end{itemize}
 
-\subsection{3-way Handshake}
+\subsubsection{3-way Handshake}
 
 Done before data can be transmitted. Negotiate TCP sequence number.
 
@@ -112,7 +110,7 @@ Done before data can be transmitted. Negotiate TCP sequence number.
 
 TCP sends FIN to tear down.
 
-\subsection{SYN / ACK Flow}
+\subsubsection{SYN / ACK Flow}
 
 TCP performs both error detection and recovery.\\
 
@@ -125,7 +123,7 @@ Sender sets acknowledgement timer. If an ACK is not received by the time
 it expires, sender will retransmit all segments in question (PAR,
 positive acknowledgement with retransmission).
 
-\subsection{Windowing}
+\subsubsection{Windowing}
 
 Window size is how much data the sender can transmit without an ACK.\\
 
@@ -134,7 +132,7 @@ Recipient decides window size (flow control).\\
 Recipient increases window size until error rate goes up, then reduces (sliding
 window).
 
-\section{UDP}
+\subsection{UDP}
 
 \begin{itemize}
 
@@ -147,7 +145,7 @@ window).
 
 Less overhead than TCP.
 
-\section{Ports}
+\subsection{Ports}
 
 Used for both TCP and UDP.\\
 
@@ -181,5 +179,3 @@ private email & TCP and UDP 24 \\ \hline
 \hline
 VOIP & UDP 16384 - 32767 \\ \hline
 \end{tabular}
-
-\end{document}

@@ -1,8 +1,6 @@
-\documentclass{article}
+\section{Introduction to Network Security}
 
-\begin{document}
-
-\section{Firewalls}
+\subsection{Firewalls}
 
 A firewall is the basic protection against internet-based attackers. A
 firewall is a physical device that filters packets heading for your network.
@@ -30,7 +28,7 @@ If users can't send email, make sure the outgoing SMTP port (25) is open.\\
 If you need to block users from accessing the web, make sure the outgoing
 HTTP port is blocked.
 
-\section{Proxy Servers}
+\subsection{Proxy Servers}
 
 Proxy servers are used to cache web pages. They will request pages on behalf
 of the original requester. Another common use for proxies is filtering
@@ -39,7 +37,7 @@ requests for specified web pages.\\
 Proxy servers can serve as a kind of firewall because they perform packet
 filtering.
 
-\section{Denial of Service Attacks}
+\subsection{Denial of Service Attacks}
 
 In a denial of service (DoS) attack, the attacker attempts to overwhelm a
 server with TCP connection requests. Legitimate users will be unable to get to
@@ -48,18 +46,18 @@ busy it cannot answer legitimate request or they crash under the load.\\
 
 A DoS attack is designed more to damage the network than to steal data.
 
-\section{Reconnaissance Attacks}
+\subsection{Reconnaissance Attacks}
 
 In a reconnaissance attack, the attacker uses different techniques to gather
 information about your network's strengths and weaknesses. The intruder will
 return later to use this information.
 
-\section{Access Attacks}
+\subsection{Access Attacks}
 
 In an access attack data is compromised or stolen for personal use, financial
 gain, or to embarrass the target.
 
-\section{Cisco Adaptive Security Appliance}
+\subsection{Cisco Adaptive Security Appliance}
 
 With so many threats, a firewall is not enough. The Cisco ASA Series controls
 network and application traffic and delivers flexible virtual private network
@@ -68,15 +66,15 @@ network and application traffic and delivers flexible virtual private network
 Cisco uses the term ``anti-x'' to describe all of the protections the ASA
 offers (anti-virus, anti-spam, etc.).
 
-\section{Cisco Intruder Detection System}
+\subsection{Cisco Intruder Detection System}
 
 Cisco Intruder Detection System (IDS) provides complete intrusion protection.
 
-\section{Cisco Intrustion Prevention System}
+\subsection{Cisco Intrustion Prevention System}
 
 Cisco Intrusion Prevention System (IPS) is targeted more towards e-commerce.
 
-\section{Preventing Virus Attacks}
+\subsection{Preventing Virus Attacks}
 
 Always keep your anti-virus program definitions up-to-date. Your network
 must be protected from both internal and external virus threats. An
@@ -108,7 +106,7 @@ software, such as games, animated cursors, etc.
 
 \end{itemize}
 
-\subsection{Choosing and Configuring An Anti-virus Program}
+\subsubsection{Choosing and Configuring An Anti-virus Program}
 
 Choose one that updates automatically.\\
 
@@ -131,13 +129,11 @@ Even with anti-virus programs, 100\% protection isn't guaranteed.
 If you turn your anti-virus program off temporarily, don't forget to turn it
 back on.
 
-\section{Locking Up Your Hardware}
+\subsection{Locking Up Your Hardware}
 
 Lock it up.
 
-\section{Hiding a Sensitive Network}
+\subsection{Hiding a Sensitive Network}
 
 VLAN's aren't just for limiting broadcast scope. They are also a security
 feature. To hide hosts, put them in their own VLAN.
-
-\end{document}

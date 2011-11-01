@@ -1,8 +1,6 @@
-\documentclass{article}
+\section{Common Router and Switch Commands}
 
-\begin{document}
-
-\section{Initial Configuration Problems}
+\subsection{Initial Configuration Problems}
 
 \begin{enumerate}
 
@@ -11,7 +9,7 @@
 
 \end{enumerate}
 
-\section{Ways to Connect to Cisco Routers and Switches}
+\subsection{Ways to Connect to Cisco Routers and Switches}
 
 \begin{enumerate}
 
@@ -20,7 +18,7 @@
 
 \end{enumerate}
 
-\section{Protecting the Console Port with a Password}
+\subsection{Protecting the Console Port with a Password}
 
 \begin{verbatim}
 conf t
@@ -31,7 +29,7 @@ login
 wr
 \end{verbatim}
 
-\section{Enabling Telnet}
+\subsection{Enabling Telnet}
 
 To enable telnet, you must have a password in the VTY lines.
 
@@ -48,7 +46,7 @@ wr
 
 When telnetting in, by default you are in user exec mode.
 
-\section{Command Modes}
+\subsection{Command Modes}
 
 \begin{description}
 
@@ -77,7 +75,7 @@ No password is required for the console, but it is recommended.\\
 
 The password on VTY lines must be set to allow telnet or ssh.
 
-\subsection{Automatically Enabling Privileged Mode}
+\subsubsection{Automatically Enabling Privileged Mode}
 
 To automatically enable privileged exec when a user logs in via telnet, set
 privilege level to 15:
@@ -88,7 +86,7 @@ line vty 0 4
 privilege level 15
 \end{verbatim}
 
-\section{Setting up SSH}
+\subsection{Setting up SSH}
 
 When using telnet, nothing is encrypted, including passwords. SSH encrypts
 everything.
@@ -122,13 +120,13 @@ And on the VTY lines:
 transport input ssh
 \end{verbatim}
 
-\subsection{Setting User Privilege}
+\subsubsection{Setting User Privilege}
 
 \begin{verbatim}
 username test privilege 15 password SECRET
 \end{verbatim}
 
-\section{LEDs}
+\subsection{LEDs}
 
 \begin{description}
 
@@ -166,7 +164,7 @@ green is 100 Mbps, dark is 10 Mbps, flashing green is 1000 Mbps
 When connecting two switches, and you don't see any lights, you may have used
 a straight-through cable instead of a crossover cable.\\
 
-\section{Switch Management Interface}
+\subsection{Switch Management Interface}
 
 For users to connect to a switch via telnet or SSH, it must have an IP address
 assigned to vlan 1 (the switch management interface).
@@ -178,13 +176,13 @@ no shutdown
 show interface vlan 1
 \end{verbatim}
 
-\section{Assigning a Default Gateway to a Switch}
+\subsection{Assigning a Default Gateway to a Switch}
 
 \begin{verbatim}
 ip default-gateway 192.168.0.1
 \end{verbatim}
 
-\section{Interface Range}
+\subsection{Interface Range}
 
 To apply the same command to a range of interfaces at once:
 
@@ -193,9 +191,9 @@ interface range fast 0/1 - 6
 speed 100
 \end{verbatim}
 
-\section{Banner}
+\subsection{Banner}
 
-\subsection{motd}
+\subsubsection{motd}
 
 motd is shown after connect.
 
@@ -205,7 +203,7 @@ banner motd $
 This is the message text. $
 \end{verbatim}
 
-\subsection{login}
+\subsubsection{login}
 
 login banner is shown before login.
 
@@ -215,7 +213,7 @@ banner login $
 Hackers log off now. $
 \end{verbatim}
 
-\subsection{exec}
+\subsubsection{exec}
 
 exec banner is shown after login.
 
@@ -225,7 +223,7 @@ banner exec $
 Welcome. $
 \end{verbatim}
 
-\section{logging synchronous}
+\subsection{logging synchronous}
 
 Hold logging messages until user input and output is done, so log messages
 don't display in the middle of user input and output.
@@ -236,7 +234,7 @@ line con 0
 logging synchronous
 \end{verbatim}
 
-\section{exec-timeout}
+\subsection{exec-timeout}
 
 exec-timeout sets the session inactivity timer (amount of time before you will
 be automatically logged out). The first number is in minutes, the second
@@ -248,7 +246,7 @@ line con 0
 exec-timeout 0 0
 \end{verbatim}
 
-\section{Command Abbreviations}
+\subsection{Command Abbreviations}
 
 \begin{tabular}{ | c | c | }
 \hline
@@ -263,7 +261,7 @@ ESC B & back one word in current command \\ \hline
 ESC F & forward one word in current command \\ \hline
 \end{tabular}
 
-\section{History}
+\subsection{History}
 
 \texttt{show history} shows the last 10 commands that you ran at this level.\\
 
@@ -275,4 +273,3 @@ line con 0
 history size 20
 \end{verbatim}
 
-\end{document}

@@ -1,6 +1,4 @@
-\documentclass{article}
-
-\begin{document}
+\section{Static Routing and RIP}
 
 In the examples the last octet of the IP address for any physical interface
 is the router number. For loopbacks, each octet is the router number.\\
@@ -14,7 +12,7 @@ the destination.\\
 When there are no static routes and no routing protocols running, you can
 still talk to hosts on the same subnet.
 
-\section{Adding a Loopback Interface}
+\subsection{Adding a Loopback Interface}
 
 \begin{verbatim}
 conf t
@@ -25,7 +23,7 @@ wr
 show int loopback0
 \end{verbatim}
 
-\section{debug ip packet}
+\subsection{debug ip packet}
 
 Never use this on a production network.
 
@@ -38,7 +36,7 @@ no debug ip packet
 \texttt{u all} or \texttt{undebug all} turns off all debugging. It's a safe
 way to make sure you don't leave any debugs on when you are done.
 
-\section{Static Routing}
+\subsection{Static Routing}
 
 The \texttt{ip route} command creates static routes. A static route can
 be to a given host or network or it can be to a a default route (a route that
@@ -64,7 +62,7 @@ When you send pings it's not enough for the local router to have connectivity
 to the remote network. The downstream routers also need connectivity to that
 network.\\
 
-\subsection{Default Routes}
+\subsubsection{Default Routes}
 
 \begin{verbatim}
 conf t
@@ -85,7 +83,7 @@ table
 \item reducing the size of the routing table
 \end{enumerate}
 
-\subsection{Host Routes}
+\subsubsection{Host Routes}
 
 Host routes are routes that only match one host (255.255.255.255 mask).
 
@@ -93,13 +91,13 @@ Host routes are routes that only match one host (255.255.255.255 mask).
 ip route 2.2.2.2 255.255.255.255 172.12.123.1
 \end{verbatim}
 
-\subsection{Why Not to Use Static Routes}
+\subsubsection{Why Not to Use Static Routes}
 
 Static routes have their place but are not very scalable. They do not
 dynamically adapt to network changes and can be hard to manage as the network
 grows.
 
-\section{Dynamic Routing Protocols}
+\subsection{Dynamic Routing Protocols}
 
 \begin{description}
 \item[RIP]
@@ -112,7 +110,7 @@ Enhanced Integrated Gateway Routing Protocol
 Open Shortest Path First
 \end{description}
 
-\subsection{RIP}
+\subsubsection{RIP}
 
 There are two version of RIP. Today RIPv2 is almost always used.\\
 
@@ -133,7 +131,7 @@ show ip protocols
 
 By default RIP will send version 1 updates, but will accept any version.
 
-\subsection{RIP Versions}
+\subsubsection{RIP Versions}
 
 \begin{description}
 \item[RIPv1]
@@ -171,7 +169,7 @@ To debug rip:
 debug ip rip  
 \end{verbatim}
 
-\subsection{RIP Metrics}
+\subsubsection{RIP Metrics}
 
 The metric for RIP (versions 1 and 2) is hop count. Hop count is a measurement
 of how far it is to to a remote destination. This is a serious limitation for
@@ -180,5 +178,3 @@ into account the speed of links.\\
 
 \texttt{clear ip route *} clears all dynamic routes. Don't use it in
 production.
-
-\end{document}

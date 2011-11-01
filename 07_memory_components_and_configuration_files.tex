@@ -1,8 +1,6 @@
-\documentclass{article}
+\section{Memory Components and Configuration Files}
 
-\begin{document}
-
-\section{ROM, RAM, NVRAM and Flash}
+\subsection{ROM, RAM, NVRAM and Flash}
 
 \begin{description}
 
@@ -24,7 +22,7 @@ non-volatile RAM, holds the router's startup configuration file, not lost
 when router is powered down or reloaded
 \end{description}
 
-\section{Cisco Router Boot Process}
+\subsection{Cisco Router Boot Process}
 
 \begin{enumerate}
 
@@ -52,17 +50,17 @@ Control-C can be used to abort setup mode.\\
 
 To enter setup mode from the router prompt use the \texttt{setup} command.\\
 
-\section{Configuration Files}
+\subsection{Configuration Files}
 
 A router has two configuration files at any given time: start-config and
 running-config. They usually have the same contents but can differ if you
 change the running configuration but do not \texttt{copy run start}.\\
 
-\subsection{copy command}
+\subsubsection{copy command}
 
 \texttt{copy <from> <to>}
 
-\section{Configuration Backups}
+\subsection{Configuration Backups}
 
 Can be useful when:
 
@@ -76,7 +74,7 @@ Can be useful when:
 
 A TFTP server can be used for backups.\\
 
-\section{IOS Updates}
+\subsection{IOS Updates}
 
 There are many different IOS images on Cisco's website and which ones you have
 access to depends on your service level.\\
@@ -88,7 +86,7 @@ After a new IOS has been loaded to Flash, the router needs to be reloaded.\\
 
 \texttt{show flash} shows how much free space is available in Flash.
 
-\section{Configuration Register}
+\subsection{Configuration Register}
 
 \texttt{show version} shows the current configuration register value.\\
 
@@ -115,5 +113,3 @@ You have to be physically present at the router to perform password recovery.\\
 
 You must remember to change the configuration register back to 0x2102 after
 using another value (such as after a password reset).
-
-\end{document}

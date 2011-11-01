@@ -1,6 +1,4 @@
-\documentclass{article}
-
-\begin{document}
+\section{IP Addressing and Routing}
 
 \begin{description}
 
@@ -9,7 +7,7 @@ network device with an IP address
 
 \end{description}
 
-\section{Converting Dotted Decimal to a Binary String}
+\subsection{Converting Dotted Decimal to a Binary String}
 
 Convert 192.168.1.100 to a binary string.\\
 
@@ -40,7 +38,7 @@ remainder.\\
   0 &   0 &  0 &  0 &  0 & 0 & 0 & 0 & 0 \\ \hline
 \end{tabular}
 
-\section{Subnetting}
+\subsection{Subnetting}
 
 The subnet mask tells which bits of the address are the network bits and
 which are the host bits.\\
@@ -56,7 +54,7 @@ In the network is configured correctly, different subnets should be on different
 
 Hosts on the same subnet should not be separated by a router.
 
-\section{IP Address Classes}
+\subsection{IP Address Classes}
 
 RFC 791 defines IP address classes.
 
@@ -84,7 +82,7 @@ Know:
 
 \end{itemize}
 
-\section{Private IP Address Ranges}
+\subsection{Private IP Address Ranges}
 
 RFC 1918 defines private address ranges. They are used for internal networks.\\
 
@@ -96,7 +94,7 @@ Class B & 172.16.0.0 - 172.31.255.255 & 172.16.0.0 255.240.0.0 & 172.168.0.0/12 
 Class C & 192.168.0.0 - 192.168.255.255 & 192.168.0.0 255.255.0.0 & 192.168.0.0/16 \\ \hline
 \end{tabular}
 
-\section{Routing}
+\subsection{Routing}
 
 When a PC wants to send data, there are two possibilites: the destination
 is on the same network or it's on another network.\\
@@ -124,4 +122,3 @@ Static routes are create with the ip route command. For example:\\
 
 \texttt{ip route 30.0.0.0 255.0.0.0 ethernet1}\\
 
-\end{document}
