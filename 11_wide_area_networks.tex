@@ -164,16 +164,18 @@ show ip nat translations
 \begin{description}
 
 \item[inside global]
-what inside local addresses are translated into, routable addresses
+represents one or more inside local IP addresses to the outside world, routable
+address
 
 \item[inside local]
-used by hosts on inside network, non-routable addresses configured on the hosts
+non-routable IP addresses configured on the hosts
 
 \item[outside global]
-configured on outside (internet based) hosts
+IP address assigned to a host on the outside network, routable address
 
 \item[outside local]
-the actual addresses of remote hosts, probably non-routable
+IP address of an outside host as it appears to the inside network, probably
+a non-routable address
 
 \end{description}
 
