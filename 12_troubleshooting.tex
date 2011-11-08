@@ -197,10 +197,16 @@ set up to put the user into enable mode immediately.\\
 telnet sends data in clear text. ssh encrypts all data but requires more
 configuration and possibly extra hardware.\\
 
-To show information about current telnet sessions:
+To show information about current outbound telnet sessions:
 
 \begin{verbatim}
 show sessions
+\end{verbatim}
+
+To show inbound telnet connections to the router:
+
+\begin{verbatim}
+show user
 \end{verbatim}
 
 To resume a telnet session by session id:
