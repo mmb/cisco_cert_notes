@@ -81,10 +81,33 @@ mismatch or a keepalives are not being received
 HDLC and PPP are the two data-link layer (layer 2) protocols used for
 encapsulation on serial point-to-point links.\\
 
-HDLC is the default method on Cisco routers.\\
+To change encapsulation on an interface:
+
+\begin{verbatim}
+conf t
+int s1
+encapsulation ppp
+\end{verbatim}
+
+\subsubsection{HDLC}
+
+HDLC is the default method on Cisco routers. It specifies an encapsulation
+method for data on synchronous serial data links using frame character and
+checksum.\\
 
 The version of HDLC that runs on Cisco routers is proprietary so it cannot
-be used in environments with multiple vendors.\\
+be used in environments with multiple vendors. Cisco HDLC adds a new type field
+so multiple network layer protocols can share the same serial link.\\
+
+HDLC includes support for both point-to-point and multipoint configurations.\\
+
+HDLC includes a method for authentication.
+
+\subsubsection{PPP}
+
+PPP provides router-to-router and host-to-network connections over synchronous
+and asynchronous circuits. It originally emerged as an encapsulation protocol
+for transporting IP traffic over point-to-point links.\\
 
 PPP allows for data compression to save bandwidth and HDLC does not.\\
 
@@ -94,13 +117,14 @@ logical channel. HDLC does not support multilink.\\
 PPP allows the use of two authentication schemes (PAP and CHAP) and HDLC
 does not support either.\\
 
-To change encapsulation on an interface:
-
 \begin{verbatim}
-conf t
-int s1
-encapsulation ppp
+ppp authentication chap pap
 \end{verbatim}
+
+means that if authentication fails using CHAP, then PAP will be attempted.\\
+
+The LCP in PPP is used for establishment, configuration, and testing the
+data-link connection.
 
 \subsection{Circuit-switched Networks}
 
@@ -112,13 +136,38 @@ carrier and communicate with each other.\\
 
 ISDN is an example of a circuit-switched network.
 
-\subsection{An Introduction to Frame Relay}
+\subsection{Point-to-point Links}
 
-Frame relay is:
+A point-to-point (or serial) communication link provides a single,
+preestablished WAN communications path from the customer premises through a
+carrier network, such as a telephone company, to a remote network.\\
+
+Carriers usually lease point-to-point lines, which is why point-to-point lines
+are often called leased lines.\\
+
+For a point-to-point line, the carrier dedicates fixed transport capacity and
+facility hardware to the line of a customer.\\
+
+Point-to-point links:
 
 \begin{itemize}
-\item cheap
-\item reliable
+
+\item require minimal expertise to install and maintain
+
+\item usually offer a high quality of service
+
+\item provide permanent, dedicated capacity that is always available
+
+\end{itemize}
+
+\subsection{An Introduction to Frame Relay}
+
+Frame relay:
+
+\begin{itemize}
+\item is cheap
+\item is reliable
+\item implements no error or flow control
 \end{itemize}
 
 Ethernet interfaces on routers are only for LAN connections. Serial interfaces
@@ -206,7 +255,7 @@ clear ip nat translation inside
 
 ATM stands for asynchronous transfer mode. It does not handle frames like
 frame relay, but places data into cells (cell-switching) each of which is 53
-bytes (5 head and 48 data).\\
+bytes (5 head and 48 data). It is implemented using virtual circuits.\\
 
 ATM networks are faster than frame relay networks but are more expensive to
 build and maintain. They require specialized hardware.
