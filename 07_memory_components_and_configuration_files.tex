@@ -77,6 +77,9 @@ Can be useful when:
 
 A TFTP server can be used for backups.\\
 
+When you copy a configuration from another source into RAM, it is merged with
+the new configuration, with the new configuration taking precedence.
+
 \subsection{IOS Updates}
 
 There are many different IOS images on Cisco's website and which ones you have
@@ -112,6 +115,8 @@ password
 router boots into ROM monitor mode
 
 \end{description}
+
+The lowest four bits of the configuration register make up the boot field.\\
 
 You have to be physically present at the router to perform password recovery.\\
 
