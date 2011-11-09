@@ -125,7 +125,13 @@ in the internetwork
 
 \item is also known as ``routing by rumor''.
 
+\item learns about paths for networks that are not directly connected from
+neighboring routers
+
 \end{itemize}
+
+As part of its periodic updates it sends its entire routing table to
+neighboring routers.
 
 \subsubsection{Link-State Routing Protocols}
 
@@ -171,7 +177,13 @@ network 1.0.0.0
 show ip protocols
 \end{verbatim}
 
-By default RIP will send version 1 updates, but will accept any version.
+By default RIP will send version 1 updates, but will accept any version.\\
+
+The maximum allowable hop count for RIP is 15.\\
+
+The default value of the RIP hold-down timer is 180 seconds.\\
+
+RIP performs load balancing over multiple paths that have equal cost.
 
 \subsubsection{RIP Versions}
 
